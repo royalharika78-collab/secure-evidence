@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Secure Digital Evidence Sharing</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #222;
+        }
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 25px auto;
+        }
+
+        .login-box {
+            max-width: 450px;
+            margin: 80px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #172554;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .logout {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .status {
+            background: #dcfce7;
+            border-left: 5px solid #16a34a;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #172554;
+        }
+
+        .section {
+            background: white;
+            padding: 22px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .section h2 {
+            color: #172554;
+        }
+
+        .block {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+
+        .hash {
+            word-break: break-all;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            color: white;
+            background: #2563eb;
+            padding: 9px 15px;
+            border-radius: 7px;
+        }
+
+        .actions a.download {
+            background: #16a34a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-x: auto;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+        }
+
+        .flash {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        .secure {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .info {
+            background: #eff6ff;
+            padding: 15px;
+            border-left: 5px solid #2563eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media(max-width: 600px) {
+
+            .container {
+                width: 95%;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions a {
+                text-align: center;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+{% if not logged_in %}
+
+    <div class="header">
+
+        <h1>🔐 Secure Digital Evidence Sharing</h1>
+
+        <p>Blockchain + Cyber Security</p>
+
+    </div>
+
+
+    <div class="login-box">
+
+        <h2>Agency Login</h2>
+
+        <form method="POST" action="/">
+
+            <label>Agency</label>
+
+            <select name="agency" required>
+
+                <option value="">Select Agency</option>
+
+                <option value="Agency A">
+                    Agency A
+                </option>
+
+                <option value="Agency B">
+                    Agency B
+                </option>
+
+                <option value="Agency C">
+                    Agency C
+                </option>
+
+            </select>
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+
+        <div class="info">
+
+            <b>Demo Login</b><br><br>
+
+            Agency A → agencyA123<br>
+            Agency B → agencyB123<br>
+            Agency C → agencyC123
+
+        </div>
+
+    </div>
+
+
+{% else %}
+
+
+    <div class="header">
+
+        <h1>🔐 Secure Digital Evidence Sharing</h1>
+
+        <p>
+            Logged in as:
+            <b>{{ agency }}</b>
+        </p>
+
+        <a class="logout" href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="flash">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <div class="status">
+
+            🔒
+            <b>Security Status:</b>
+
+            {% if security_status %}
+
+                <span class="secure">
+                    Blockchain Valid
+                </span>
+
+            {% else %}
+
+                <span>
+                    Blockchain Integrity Problem
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- CARDS -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h3>👤 Current Agency</h3>
+
+                <p>
+                    {{ agency }}
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>📁 Accessible Evidence</h3>
+
+                <p>
+                    {{ blockchain|length }}
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>⛓️ Blockchain</h3>
+
+                <p>
+                    Protected
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🔐 Encryption</h3>
+
+                <p>
+                    Active
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- UPLOAD -->
+
+        <div class="section">
+
+            <h2>📤 Send Digital Evidence</h2>
+
+            <p>
+                Evidence is encrypted before storage and
+                protected using SHA-256 integrity verification.
+            </p>
+
+
+            <form
+                method="POST"
+                action="/upload"
+                enctype="multipart/form-data"
+            >
+
+
+                <label>
+                    Select Evidence File
+                </label>
+
+                <input
+                    type="file"
+                    name="evidence"
+                    required
+                >
+
+
+                <label>
+                    Send To
+                </label>
+
+                <select
+                    name="receiver"
+                    required
+                >
+
+                    <option value="">
+                        Select Receiving Agency
+                    </option>
+
+
+                    {% if agency != "Agency A" %}
+
+                        <option value="Agency A">
+                            Agency A
+                        </option>
+
+                    {% endif %}
+
+
+                    {% if agency != "Agency B" %}
+
+                        <option value="Agency B">
+                            Agency B
+                        </option>
+
+                    {% endif %}
+
+
+                    {% if agency != "Agency C" %}
+
+                        <option value="Agency C">
+                            Agency C
+                        </option>
+
+                    {% endif %}
+
+                </select>
+
+
+                <button type="submit">
+
+                    🔐 Encrypt & Send Evidence
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- EVIDENCE -->
+
+        <div class="section">
+
+            <h2>
+                📂 My Evidence
+            </h2>
+
+
+            {% if blockchain %}
+
+
+                {% for block in blockchain %}
+
+
+                    <div class="block">
+
+
+                        <h3>
+                            📄 {{ block.filename }}
+                        </h3>
+
+
+                        <p>
+                            <b>Evidence ID:</b>
+                            {{ block.evidence_id }}
+                        </p>
+
+
+                        <p>
+                            <b>Sender:</b>
+                            {{ block.sender }}
+                        </p>
+
+
+                        <p>
+                            <b>Receiver:</b>
+                            {{ block.receiver }}
+                        </p>
+
+
+                        <p>
+                            <b>Time:</b>
+                            {{ block.timestamp }}
+                        </p>
+
+
+                        <p>
+                            <b>Evidence SHA-256:</b>
+                        </p>
+
+                        <div class="hash">
+
+                            {{ block.evidence_hash }}
+
+                        </div>
+
+
+                        <p>
+                            <b>Previous Block Hash:</b>
+                        </p>
+
+                        <div class="hash">
+
+                            {{ block.previous_hash }}
+
+                        </div>
+
+
+                        <p>
+                            <b>Block Hash:</b>
+                        </p>
+
+                        <div class="hash">
+
+                            {{ block.hash }}
+
+                        </div>
+
+
+                        <div class="actions">
+
+
+                            <a href="/verify/{{ block.evidence_id }}">
+
+                                🔍 Verify Integrity
+
+                            </a>
+
+
+                            <a
+                                class="download"
+                                href="/download/{{ block.evidence_id }}"
+                            >
+
+                                📥 Download
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+
+                <p>
+                    No evidence available for your agency.
+                </p>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- CHAIN OF CUSTODY -->
+
+        <div class="section">
+
+            <h2>
+                📋 Chain of Custody
+            </h2>
+
+
+            {% if custody_log %}
+
+
+                <table>
+
+                    <tr>
+
+                        <th>Time</th>
+
+                        <th>Event</th>
+
+                        <th>Agency</th>
+
+                        <th>Evidence ID</th>
+
+                        <th>Sender</th>
+
+                        <th>Receiver</th>
+
+                    </tr>
+
+
+                    {% for log in custody_log %}
+
+
+                        <tr>
+
+                            <td>
+                                {{ log.timestamp }}
+                            </td>
+
+                            <td>
+                                {{ log.event }}
+                            </td>
+
+                            <td>
+                                {{ log.agency }}
+                            </td>
+
+                            <td>
+                                {{ log.evidence_id or "-" }}
+                            </td>
+
+                            <td>
+                                {{ log.sender or "-" }}
+                            </td>
+
+                            <td>
+                                {{ log.receiver or "-" }}
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+
+                </table>
+
+
+            {% else %}
+
+                <p>
+                    No custody events available.
+                </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- SECURITY FEATURES -->
+
+        <div class="section">
+
+            <h2>
+                🛡️ Security Features
+            </h2>
+
+            <ul>
+
+                <li>
+                    🔐 Evidence Encryption
+                </li>
+
+                <li>
+                    #️⃣ SHA-256 Evidence Integrity
+                </li>
+
+                <li>
+                    ⛓️ Blockchain Hash Chain
+                </li>
+
+                <li>
+                    👤 Agency Authentication
+                </li>
+
+                <li>
+                    🚫 Sender/Receiver Access Control
+                </li>
+
+                <li>
+                    📋 Chain of Custody
+                </li>
+
+                <li>
+                    🔍 Tamper Detection
+                </li>
+
+                <li>
+                    🚨 Unauthorized Access Detection
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+{% endif %}
+
+
+</body>
+</html>
